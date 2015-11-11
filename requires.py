@@ -33,6 +33,7 @@ class HttpRequires(RelationBase):
                         {
                             'hostname': address_of_host,
                             'port': port_for_host,
+                            'path': path_for_proxying_host,
                         },
                         # ...
                     ],
@@ -47,11 +48,13 @@ class HttpRequires(RelationBase):
                 'service_name': service_name,
                 'hosts': [],
             })
-            host = conv.get_remote('hostname') or conv.get_remove('private-address')
+            host = conv.get_remote('hostname') or conv.get_remote('private-address')
             port = conv.get_remote('port')
+            path = conv.get_remote('path')
             if host and port:
                 service['hosts'].append({
                     'hostname': host,
                     'port': port,
+                    'path': path,
                 })
         return [s for s in services.values() if s['hosts']]

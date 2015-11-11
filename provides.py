@@ -15,9 +15,10 @@ class HttpProvides(RelationBase):
     def broken(self):
         self.remove_state('{relation_name}.available')
 
-    def configure(self, port):
+    def configure(self, port, **kwargs):
         relation_info = {
             'hostname': hookenv.unit_get('private-address'),
             'port': port,
         }
+        relation_info.update(kwargs)
         self.set_remote(**relation_info)
